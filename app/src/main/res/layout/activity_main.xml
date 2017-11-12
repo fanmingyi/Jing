@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.shoping.yt.activity.MainActivity">
+
+    <FrameLayout
+        android:id="@+id/fl_containt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <View
+        android:id="@+id/view_fill"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="0.0000001dp"/>
+
+    <RadioGroup
+        android:id="@+id/rg_navigation"
+
+        app:layout_constraintBottom_toTopOf="@id/view_fill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:gravity="center"
+            android:drawableTop="@mipmap/ic_tab_main"
+            android:text="主页" />
+
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@mipmap/ic_tab_main_cloudmall"
+            android:text="分类"
+            android:gravity="center"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="商业圈"
+            android:button="@null"
+            android:drawableTop="@mipmap/ic_tab_main_circle"
+            android:gravity="center"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:text="购物车"
+            android:drawableTop="@mipmap/ic_tab_shopmall"
+            android:gravity="center"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:button="@null"
+            android:text="我的"
+            android:gravity="center"
+            android:drawableTop="@mipmap/ic_tab_main_mine"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+    </RadioGroup>
+</android.support.constraint.ConstraintLayout>
