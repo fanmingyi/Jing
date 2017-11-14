@@ -13,12 +13,13 @@ import java.util.concurrent.TimeUnit
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
+    var navigationIcon = intArrayOf(R.mipmap.ic_main_middle_daily,R.mipmap.ic_main_middle_game)
+
     @Test
     fun addition_isCorrect() {
 
-        Observable.timer(2, TimeUnit.SECONDS).subscribe { aLong ->
-            var aLong = aLong
-            aLong = 23L
-        }//                observeOn(AndroidSchedulers.mainThread()).
+        for (i in navigationIcon.iterator()) {
+            println(i)
+        }
     }
 }

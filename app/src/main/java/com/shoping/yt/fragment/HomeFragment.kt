@@ -2,13 +2,21 @@ package com.shoping.yt.fragment
 
 
 import android.content.Context
+import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SimpleAdapter
+import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback
+import com.chad.library.adapter.base.listener.OnItemDragListener
+import com.chad.library.adapter.base.listener.OnItemSwipeListener
 import com.daimajia.slider.library.Animations.DescriptionAnimation
 import com.daimajia.slider.library.SliderLayout
 import com.daimajia.slider.library.SliderTypes.BaseSliderView
@@ -16,8 +24,12 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView
 import com.readystatesoftware.systembartint.SystemBarTintManager
 import com.shoping.yt.R
 import com.shoping.yt.activity.MainActivity
+import com.shoping.yt.adapter.MainMiddleNavigationAdapter
+import com.shoping.yt.bean.MainNavigationBean
 import com.shoping.yt.utils.DimenUtitls
 import kotlinx.android.synthetic.main.fragment_home.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
@@ -34,18 +46,14 @@ class HomeFragment : Fragment() {
 
     var url_maps = HashMap<String, String>()
 
-    private fun init() {
+    private fun initNavigation() {
         var sbtm = SystemBarTintManager(mContext)
 
         sbtm.setNavigationBarTintEnabled(true)
 
         sbtm.isStatusBarTintEnabled = true
 
-//        sbtm.setNavigationBarAlpha(1F)
-
         sbtm.setTintColor(Color.TRANSPARENT)
-
-//        sbtm.setStatusBarAlpha(1F)
 
         val systemtHeight = DimenUtitls.getSystemtHeight(mContext)
 //
@@ -54,6 +62,7 @@ class HomeFragment : Fragment() {
         layoutParams.topMargin = systemtHeight
 
         tb_title.layoutParams = layoutParams
+
 
     }
 
@@ -74,8 +83,60 @@ class HomeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initSlid()
-        init()
+        initNavigation()
+        initMiddleNavigation()
     }
+
+    private fun initMiddleNavigation() {
+        var data = ArrayList<MainNavigationBean>()
+        for (i in navigationIcon.indices) {
+            val mainNavigationBean = MainNavigationBean(navigationString[i], navigationIcon[i])
+            data.add(mainNavigationBean)
+        }
+        val mainMiddleNavigationAdapter = MainMiddleNavigationAdapter(data)
+        val gridLayoutManager = GridLayoutManager(mContext, 4, GridLayoutManager.VERTICAL, false);
+        rv_middle_natvigation.layoutManager =gridLayoutManager;
+        rv_middle_natvigation.adapter = mainMiddleNavigationAdapter
+
+
+        var itemDragAndSwipeCallback =  ItemDragAndSwipeCallback(mainMiddleNavigationAdapter);
+        var itemTouchHelper =  ItemTouchHelper(itemDragAndSwipeCallback);
+        itemTouchHelper.attachToRecyclerView(rv_middle_natvigation)
+
+
+        mainMiddleNavigationAdapter.enableDragItem(itemTouchHelper)
+
+        mainMiddleNavigationAdapter.setOnItemDragListener(onItemDragListener)
+    }
+
+    internal var onItemSwipeListener: OnItemSwipeListener = object : OnItemSwipeListener {
+        override fun onItemSwipeStart(viewHolder: RecyclerView.ViewHolder, pos: Int) {}
+        override fun clearView(viewHolder: RecyclerView.ViewHolder, pos: Int) {}
+        override fun onItemSwiped(viewHolder: RecyclerView.ViewHolder, pos: Int) {}
+
+        override fun onItemSwipeMoving(canvas: Canvas, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, isCurrentlyActive: Boolean) {
+
+        }
+    }
+    internal var onItemDragListener: OnItemDragListener = object : OnItemDragListener {
+        override fun onItemDragStart(viewHolder: RecyclerView.ViewHolder, pos: Int) {}
+        override fun onItemDragMoving(source: RecyclerView.ViewHolder, from: Int, target: RecyclerView.ViewHolder, to: Int) {}
+        override fun onItemDragEnd(viewHolder: RecyclerView.ViewHolder, pos: Int) {}
+    }
+
+    var navigationString = arrayOf("电技", "闲置","美食","租赁","海外","二手","限时优惠","夺宝","日常")
+    var navigationIcon = intArrayOf(
+            R.mipmap.ic_main_middle_game,
+            R.mipmap.ic_main_middle_secondhand,
+            R.mipmap.ic_main_middle_takeout,
+            R.mipmap.ic_main_middle_renting,
+            R.mipmap.ic_main_middle_goodcargo,
+            R.mipmap.ic_main_middle_discounts,
+            R.mipmap.ic_main_middle_rush,
+            R.mipmap.ic_main_middle_daily
+
+    )
+
 
     private fun initSlid() {
         url_maps.put("三只松鼠限时特惠", "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1510480484329&di=ee201068a45d085a26447f2c9e2e061a&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01ab3557b10cfe0000018c1be6a69c.png")

@@ -1,7 +1,6 @@
 package com.shoping.yt.activity
 
 import android.os.Bundle
-import android.support.annotation.StringDef
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.shoping.yt.R
@@ -25,13 +24,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun initNavigetion() {
 
-        val dpi = DimenUtitls.getDaoHangHeight(this)
-
-        if (dpi > 0) {
+        if (DimenUtitls.isExceedKITKAT()&&DimenUtitls.checkDeviceHasNavigationBar(this)) {
+            val dpi = DimenUtitls.getDaoHangHeight(this)
             val layoutParams = view_fill.layoutParams
             layoutParams.height =dpi
             view_fill.layoutParams =layoutParams
-
             view_fill.visibility = View.VISIBLE
         }
     }

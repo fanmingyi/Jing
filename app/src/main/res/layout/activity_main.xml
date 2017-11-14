@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.shoping.yt.activity.MainActivity">
@@ -21,7 +22,7 @@
 
     <RadioGroup
         android:id="@+id/rg_navigation"
-
+        android:background="#fff"
         app:layout_constraintBottom_toTopOf="@id/view_fill"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,44 +31,54 @@
         <RadioButton
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:textColor="@drawable/btn_tx_main_sl"
             android:layout_height="wrap_content"
             android:button="@null"
             android:gravity="center"
-            android:drawableTop="@mipmap/ic_tab_main"
+            android:drawableTop="@drawable/btn_home_main_sl"
             android:text="主页" />
 
         <RadioButton
+
             android:layout_width="0dp"
             android:layout_weight="1"
             android:button="@null"
-            android:drawableTop="@mipmap/ic_tab_main_cloudmall"
+            android:drawableTop="@drawable/btn_classify_main_sl"
             android:text="分类"
             android:gravity="center"
+            android:textColor="@drawable/btn_tx_main_sl"
+
             android:layout_height="wrap_content" />
 
         <RadioButton
             android:layout_width="0dp"
             android:layout_weight="1"
             android:text="商业圈"
+            android:textColor="@drawable/btn_tx_main_sl"
+
             android:button="@null"
-            android:drawableTop="@mipmap/ic_tab_main_circle"
+            android:drawableTop="@drawable/btn_qz_main_sl"
             android:gravity="center"
             android:layout_height="wrap_content" />
 
         <RadioButton
+            android:textColor="@drawable/btn_tx_main_sl"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:button="@null"
             android:text="购物车"
-            android:drawableTop="@mipmap/ic_tab_shopmall"
+            android:drawableTop="@drawable/btn_cart_main_sl"
             android:gravity="center"
             android:layout_height="wrap_content" />
 
         <RadioButton
+
             android:button="@null"
             android:text="我的"
+            android:textColor="@drawable/btn_tx_main_sl"
+
             android:gravity="center"
-            android:drawableTop="@mipmap/ic_tab_main_mine"
+            android:drawableTop="@drawable/btn_my_main_sl"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content" />

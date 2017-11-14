@@ -60,10 +60,10 @@
     native <methods>;
 }
 -keepclasseswithmembers class * {      # 保持自定义控件类不被混淆
-    public <init>(android.content.Context, android.util.AttributeSet);
+    public <initNavigation>(android.content.Context, android.util.AttributeSet);
 }
 -keepclasseswithmembers class * {      # 保持自定义控件类不被混淆
-    public <init>(android.content.Context, android.util.AttributeSet, int);
+    public <initNavigation>(android.content.Context, android.util.AttributeSet, int);
 }
 -keepclassmembers class * extends android.app.Activity { # 保持自定义控件类不被混淆
     public void *(android.view.View);
@@ -126,3 +126,14 @@
 -keep public class com.squareup.okhttp.OkUrlFactory
 -keep public class com.squareup.okhttp.OkHttpClient
 ##-------------------------------------------
+
+
+-keep class com.chad.library.adapter.** {
+*;
+}
+-keep public class * extends com.chad.library.adapter.base.BaseQuickAdapter
+-keep public class * extends com.chad.library.adapter.base.BaseViewHolder
+-keepclassmembers  class **$** extends com.chad.library.adapter.base.BaseViewHolder {
+     <init>(...);
+}
+

@@ -1,13 +1,22 @@
 package com.shoping.yt;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.DaggerBaseLayerComponent;
+import android.support.test.espresso.base.DaggerBaseLayerComponent_PackageProxy;
+import android.support.test.espresso.core.deps.dagger.Component;
+import android.support.test.espresso.core.deps.dagger.Module;
+import android.support.test.espresso.core.deps.dagger.Provides;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.chad.library.adapter.base.listener.OnItemDragListener;
+import com.chad.library.adapter.base.listener.OnItemSwipeListener;
 import com.shoping.yt.utils.DimenUtitls;
 
 import org.junit.Test;
@@ -28,9 +37,36 @@ import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 @RunWith(AndroidJUnit4.class)
 public class JAVAInstrumentedTest {
     @Test
-    public  void test(){
-        Context context = InstrumentationRegistry.getContext();
+    public void test() {
 
 
     }
+    OnItemDragListener onItemDragListener = new OnItemDragListener() {
+        @Override
+        public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int pos){}
+        @Override
+        public void onItemDragMoving(RecyclerView.ViewHolder source, int from, RecyclerView.ViewHolder target, int to) {}
+        @Override
+        public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {}
+    };
+
+    OnItemSwipeListener onItemSwipeListener = new OnItemSwipeListener() {
+        @Override
+        public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {}
+        @Override
+        public void clearView(RecyclerView.ViewHolder viewHolder, int pos) {}
+        @Override
+        public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {}
+
+        @Override
+        public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
+
+        }
+    };
+    static class A {
+        String name;
+
+    }
+
+
 }
