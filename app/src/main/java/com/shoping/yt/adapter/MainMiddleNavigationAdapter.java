@@ -1,11 +1,8 @@
 package com.shoping.yt.adapter;
 
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseItemDraggableAdapter;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shoping.yt.R;
 import com.shoping.yt.bean.MainNavigationBean;
@@ -25,6 +22,6 @@ public class MainMiddleNavigationAdapter extends BaseItemDraggableAdapter<MainNa
     @Override
     protected void convert(BaseViewHolder helper, MainNavigationBean item) {
         helper.setImageBitmap(R.id.iv, BitmapFactory.decodeResource(mContext.getResources(), item.getImg_id()));
-        helper.setText(R.id.tv, item.getName());
+        helper.setText(R.id.title, item.getName());
     }
 }

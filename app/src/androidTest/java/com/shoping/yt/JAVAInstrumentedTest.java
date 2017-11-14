@@ -1,5 +1,6 @@
 package com.shoping.yt;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.support.test.InstrumentationRegistry;
@@ -9,9 +10,12 @@ import android.support.test.espresso.core.deps.dagger.Component;
 import android.support.test.espresso.core.deps.dagger.Module;
 import android.support.test.espresso.core.deps.dagger.Provides;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
@@ -39,7 +43,20 @@ public class JAVAInstrumentedTest {
     @Test
     public void test() {
 
+       View v = null;
 
+        Activity mContext = null;
+        new GridLayoutManager(mContext, 4){
+            @Override
+            public boolean canScrollHorizontally() {
+                return false;
+            }
+
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
     }
     OnItemDragListener onItemDragListener = new OnItemDragListener() {
         @Override

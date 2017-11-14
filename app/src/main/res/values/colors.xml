@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorBtnTxPress">#FF4081</color>
     <color name="colorBtnTxNormal">#737373</color>
+    <color name="grey">#808080</color>
+    <color name="titilegrey">#484848</color>
 </resources>

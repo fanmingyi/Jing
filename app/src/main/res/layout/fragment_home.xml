@@ -1,179 +1,408 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#F1F2F2"
-    tools:context="com.shoping.yt.fragment.HomeFragment">
+    android:layout_height="match_parent">
 
-    <com.daimajia.slider.library.SliderLayout
-        android:id="@+id/slider"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nsv"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:layout_constraintTop_toTopOf="parent">
-        <!--<com.daimajia.slider.library.Indicators.PagerIndicator-->
-        <!--android:id="@+id/custom_indicator2"-->
-        <!--style="@style/AndroidImageSlider_Corner_Oval_Orange"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_marginBottom="20dp"-->
-        <!--/>-->
+        android:layout_height="match_parent">
 
-    </com.daimajia.slider.library.SliderLayout>
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F1F2F2"
+            tools:context="com.shoping.yt.fragment.HomeFragment">
 
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slider"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:layout_constraintTop_toTopOf="parent">
+                <!--<com.daimajia.slider.library.Indicators.PagerIndicator-->
+                <!--android:id="@+id/custom_indicator2"-->
+                <!--style="@style/AndroidImageSlider_Corner_Oval_Orange"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:layout_marginBottom="20dp"-->
+                <!--/>-->
+
+            </com.daimajia.slider.library.SliderLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_middle_natvigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#fff"
+                android:paddingBottom="7dp"
+                android:paddingTop="7dp"
+                app:layout_constraintTop_toBottomOf="@+id/slider" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#ccc"
+                app:layout_constraintTop_toTopOf="@+id/rv_middle_natvigation" />
+
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/cl_hshlife"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#fff"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/rv_middle_natvigation">
+
+                <TextView
+                    android:id="@+id/iv_hshlife"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_huilife"
+                    android:drawablePadding="5dp"
+                    android:gravity="center"
+                    android:text="惠生活"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/view_hshlife_middle"
+                    android:layout_width="1dp"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="7dp"
+                    android:background="#ccc"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/iv_hshlife"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:text="给你最优质的生活"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/view_hshlife_middle"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+            <View
+                android:id="@+id/view_hshlife"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#ccc"
+                app:layout_constraintBottom_toTopOf="@+id/cl_hshlife" />
+
+            <View
+                android:id="@+id/view_hshlife2"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+
+                android:background="#ddd"
+                android:paddingLeft="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/cl_hshlife" />
+
+            <RelativeLayout
+                android:id="@+id/rl_upshowleft"
+                android:layout_width="0dp"
+                android:layout_height="190dp"
+                android:background="#fff"
+                app:layout_constraintEnd_toStartOf="@+id/rl_upshowright"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view_hshlife2"
+                app:layout_constraintVertical_weight="1">
+
+
+                <TextView
+                    android:id="@+id/tv_title1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="14dp"
+                    android:text="品牌特卖"
+                    android:textColor="#808059"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_content1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_title1"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="3dp"
+                    android:text="精品超值购"
+                    android:textColor="@color/grey"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tv_baoyou"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_content1"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@mipmap/ic_talkpop"
+                    android:gravity="center"
+                    android:text="99元\n包邮"
+                    android:textColor="#fff" />
+
+                <ImageView
+                    android:id="@+id/iv_show1"
+                    android:layout_width="120dp"
+                    android:layout_height="100dp"
+                    android:layout_alignTop="@+id/tv_baoyou"
+                    android:layout_toRightOf="@+id/tv_baoyou"
+                    android:scaleType="centerInside" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rl_upshowright"
+                android:layout_width="0dp"
+                android:layout_height="190dp"
+                android:background="#fff"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/rl_upshowleft"
+                app:layout_constraintTop_toBottomOf="@+id/view_hshlife2">
+
+                <TextView
+                    android:id="@+id/tv_title2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="14dp"
+                    android:text="尊享价"
+                    android:textColor="#808059"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_content2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_title2"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="3dp"
+                    android:text="特惠降价"
+                    android:textColor="@color/grey"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tv_baoyou2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_content2"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@mipmap/ic_talkpop"
+                    android:gravity="center"
+                    android:text="99元\n包邮"
+                    android:textColor="#fff" />
+
+                <ImageView
+                    android:id="@+id/iv_show2"
+                    android:layout_width="120dp"
+                    android:layout_height="100dp"
+                    android:layout_alignTop="@+id/tv_baoyou2"
+                    android:layout_toRightOf="@+id/tv_baoyou2"
+                    android:scaleType="centerInside" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="25dp"
+                android:background="#ccc"
+                app:layout_constraintBottom_toBottomOf="@+id/rl_upshowleft"
+                app:layout_constraintLeft_toRightOf="@+id/rl_upshowleft"
+                app:layout_constraintTop_toTopOf="@+id/rl_upshowleft" />
+
+            <View
+                android:id="@+id/line_show"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#ddd"
+                app:layout_constraintTop_toBottomOf="@id/rl_upshowleft" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_four"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                app:layout_constraintTop_toBottomOf="@+id/line_show" />
+
+
+            <View
+                android:id="@+id/line_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#ddd"
+                app:layout_constraintTop_toBottomOf="@id/rv_four" />
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/cl_custom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#fff"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/line_bottom">
+
+                <TextView
+                    android:id="@+id/iv_custom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_diy"
+                    android:drawablePadding="5dp"
+                    android:gravity="center"
+                    android:text="专属定制"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/view_custom_middle"
+                    android:layout_width="1dp"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="7dp"
+                    android:background="#ccc"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/iv_custom"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:text="你要的 随时可以要"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/view_custom_middle"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <View
+                android:id="@+id/line_finalbottom"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="#ddd"
+                app:layout_constraintTop_toBottomOf="@id/cl_custom" />
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/rv_custom"
+                android:background="#fff"
+                app:layout_constraintTop_toBottomOf="@+id/line_finalbottom"
+                android:layout_height="wrap_content"/>
+
+            <View
+                app:layout_constraintTop_toBottomOf="@+id/rv_custom"
+                android:layout_marginTop="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/tb_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         app:contentInsetStart="0dp"
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <RelativeLayout
+        <android.support.constraint.ConstraintLayout
+
             android:id="@+id/rl_containt_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <ImageButton
                 android:id="@+id/ib_scan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:src="@mipmap/ic_scan" />
+                android:src="@mipmap/ic_scan"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
+
                 android:id="@+id/ib_msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:background="@null"
-                android:src="@mipmap/ic_msg" />
+                android:scaleType="fitXY"
+                android:src="@mipmap/ic_msg"
+                app:layout_constraintBottom_toBottomOf="@id/ib_scan"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/ib_scan" />
 
             <EditText
                 android:id="@+id/et_search"
                 android:layout_width="0dp"
+
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/ib_msg"
-                android:layout_toRightOf="@id/ib_scan"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/et_search_shape"
+                android:drawableLeft="@mipmap/item_search"
+                android:drawablePadding="5dp"
                 android:hint="三只松鼠"
                 android:imeOptions="actionDone"
                 android:maxLines="1"
-                android:paddingLeft="40dp"
-                android:singleLine="true" />
+                android:paddingBottom="6dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="6dp"
+                android:singleLine="true"
+                android:textSize="13sp"
+                android:theme="@style/MyEditText"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/ib_scan"
+                app:layout_constraintRight_toLeftOf="@id/ib_msg"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/et_search"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="3dp"
-                android:src="@android:drawable/ic_menu_search" />
-        </RelativeLayout>
+            <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignLeft="@+id/et_search"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="3dp"-->
+            <!--android:src="@android:drawable/ic_menu_search" />-->
+            <View
+                android:id="@+id/tb_bottomline"
+                android:layout_width="match_parent"
+                android:layout_height="0.05dp"
+                android:alpha="0"
+                android:background="#ccc"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
 
 
     </android.support.v7.widget.Toolbar>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_middle_natvigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="#fff"
-        android:paddingBottom="7dp"
-        android:paddingTop="7dp"
-        app:layout_constraintTop_toBottomOf="@+id/slider" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#ccc"
-        app:layout_constraintTop_toTopOf="@+id/rv_middle_natvigation" />
+</RelativeLayout>
 
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/cl_hshlife"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="#fff"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/rv_middle_natvigation">
-
-        <TextView
-            android:id="@+id/iv_hshlife"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@mipmap/ic_huilife"
-            android:drawablePadding="5dp"
-            android:gravity="center"
-            android:text="惠生活"
-            android:textColor="#000"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:id="@+id/view_hshlife_middle"
-            android:layout_width="1dp"
-            android:layout_height="0dp"
-            android:layout_marginLeft="7dp"
-            android:background="#ccc"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/iv_hshlife"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:text="给你最优质的生活"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/view_hshlife_middle"
-            app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
-
-    <View
-        android:id="@+id/view_hshlife"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#ccc"
-        app:layout_constraintBottom_toTopOf="@+id/cl_hshlife" />
-
-    <View
-        android:id="@+id/view_hshlife2"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#ccc"
-        app:layout_constraintTop_toBottomOf="@+id/cl_hshlife" />
-
-    <RelativeLayout
-        android:id="@+id/rl_upshowleft"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        app:layout_constraintVertical_weight="1"
-        android:background="#ff0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/rl_upshowright"
-        app:layout_constraintTop_toBottomOf="@+id/view_hshlife2">
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rl_upshowright"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:background="#f00"
-        app:layout_constraintEnd_toStartOf="@+id/rl_upshowleft"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_hshlife2">
-
-    </RelativeLayout>
-</android.support.constraint.ConstraintLayout>

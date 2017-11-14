@@ -24,13 +24,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun initNavigetion() {
 
-        if (DimenUtitls.isExceedKITKAT()&&DimenUtitls.checkDeviceHasNavigationBar(this)) {
-            val dpi = DimenUtitls.getDaoHangHeight(this)
-            val layoutParams = view_fill.layoutParams
-            layoutParams.height =dpi
-            view_fill.layoutParams =layoutParams
-            view_fill.visibility = View.VISIBLE
-        }
+//        if (DimenUtitls.isExceedKITKAT()&&DimenUtitls.checkDeviceHasNavigationBar(this)) {
+//            val dpi = DimenUtitls.getDaoHangHeight(this)
+//            val layoutParams = view_fill.layoutParams
+//            layoutParams.height =dpi
+//            view_fill.layoutParams =layoutParams
+//            view_fill.visibility = View.VISIBLE
+//        }
     }
 
     lateinit var homeFragment: HomeFragment
