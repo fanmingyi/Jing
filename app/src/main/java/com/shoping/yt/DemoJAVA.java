@@ -6,6 +6,8 @@ import android.util.Log;
 
 import com.chad.library.adapter.base.listener.OnItemDragListener;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -21,6 +23,6 @@ public class DemoJAVA {
 
     private static final String TAG = "DemoJAVA";
     public void t(){
-        ;
+
     }
 }

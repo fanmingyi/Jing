@@ -48,11 +48,21 @@ class HomeFragment : Fragment() {
 
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) {
+            val scrollY = nsv.scrollY
+            if (scrollY==0)
+                sbtm.setTintColor(Color.TRANSPARENT)
+        }
+
+    }
+
     var url_maps = HashMap<String, String>()
     val TAG = "FMY";
-
+    lateinit var sbtm: SystemBarTintManager ;
     private fun initNavigation() {
-        var sbtm = SystemBarTintManager(mContext)
+         sbtm = (mContext as MainActivity).getstm()
 
         sbtm.setNavigationBarTintEnabled(true)
 
@@ -132,8 +142,8 @@ class HomeFragment : Fragment() {
 
     private fun initFinalRv() {
         val data = ArrayList<String>()
-        data.add("https://img14.360buyimg.com/n1/s546x546_jfs/t7243/249/2639307512/334952/36bd6321/59b26495N982225a7.jpg")
-        data.add("https://img14.360buyimg.com/n1/s546x546_jfs/t7243/249/2639307512/334952/36bd6321/59b26495N982225a7.jpg")
+        data.add("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3772146472,2512961182&fm=200&gp=0.jpg")
+        data.add("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3772146472,2512961182&fm=200&gp=0.jpg")
         val llm: LinearLayoutManager = object : LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false) {
             override fun canScrollHorizontally(): Boolean {
                 return false

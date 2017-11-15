@@ -1,91 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout>
 
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.shoping.yt.activity.MainActivity">
+    <data>
 
-    <FrameLayout
-        android:id="@+id/fl_containt"
+        <variable
+            name="mactivity"
+            type="com.shoping.yt.activity.MainActivity" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/rootView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:context="com.shoping.yt.activity.MainActivity">
+
+        <FrameLayout
+            android:id="@+id/fl_containt"
+            app:layout_constraintTop_toTopOf="parent"
+
+            app:layout_constraintBottom_toTopOf="@+id/rg_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
 
 
-    <View
-        android:id="@+id/view_fill"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="0.0000001dp"/>
+        <View
+            android:id="@+id/view_fill"
+            android:layout_width="match_parent"
+            android:layout_height="0.0000001dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-    <RadioGroup
-        android:id="@+id/rg_navigation"
-        android:background="#fff"
-        app:layout_constraintBottom_toTopOf="@id/view_fill"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:textColor="@drawable/btn_tx_main_sl"
+        <RadioGroup
+            android:id="@+id/rg_navigation"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:button="@null"
-            android:gravity="center"
-            android:drawableTop="@drawable/btn_home_main_sl"
-            android:text="主页" />
+            android:background="#fff"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/view_fill">
 
-        <RadioButton
+            <RadioButton
+                android:id="@+id/rb_home"
+                android:checked="true"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/btn_home_main_sl"
+                android:gravity="center"
+                android:text="主页"
+                android:textColor="@drawable/btn_tx_main_sl" />
 
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableTop="@drawable/btn_classify_main_sl"
-            android:text="分类"
-            android:gravity="center"
-            android:textColor="@drawable/btn_tx_main_sl"
+            <RadioButton
+                android:id="@+id/rb_classify"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/btn_classify_main_sl"
+                android:gravity="center"
+                android:text="分类"
 
-            android:layout_height="wrap_content" />
+                android:textColor="@drawable/btn_tx_main_sl" />
 
-        <RadioButton
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:text="商业圈"
-            android:textColor="@drawable/btn_tx_main_sl"
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
 
-            android:button="@null"
-            android:drawableTop="@drawable/btn_qz_main_sl"
-            android:gravity="center"
-            android:layout_height="wrap_content" />
+                android:drawableTop="@drawable/btn_qz_main_sl"
+                android:gravity="center"
+                android:text="商业圈"
+                android:textColor="@drawable/btn_tx_main_sl" />
 
-        <RadioButton
-            android:textColor="@drawable/btn_tx_main_sl"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:button="@null"
-            android:text="购物车"
-            android:drawableTop="@drawable/btn_cart_main_sl"
-            android:gravity="center"
-            android:layout_height="wrap_content" />
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/btn_cart_main_sl"
+                android:gravity="center"
+                android:text="购物车"
+                android:textColor="@drawable/btn_tx_main_sl" />
 
-        <RadioButton
+            <RadioButton
 
-            android:button="@null"
-            android:text="我的"
-            android:textColor="@drawable/btn_tx_main_sl"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
 
-            android:gravity="center"
-            android:drawableTop="@drawable/btn_my_main_sl"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content" />
-    </RadioGroup>
-    <View
-        android:background="#ddd"
-        app:layout_constraintBottom_toTopOf="@+id/rg_navigation"
-        android:layout_width="wrap_content"
-        android:layout_height="0.5dp"/>
-</android.support.constraint.ConstraintLayout>
+                android:button="@null"
+                android:drawableTop="@drawable/btn_my_main_sl"
+                android:gravity="center"
+                android:text="我的"
+                android:textColor="@drawable/btn_tx_main_sl" />
+        </RadioGroup>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.5dp"
+            android:background="#ddd"
+            app:layout_constraintBottom_toTopOf="@+id/rg_navigation" />
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

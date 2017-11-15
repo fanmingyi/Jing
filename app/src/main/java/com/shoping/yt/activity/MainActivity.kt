@@ -1,68 +1,109 @@
 package com.shoping.yt.activity
 
+
+import android.app.Activity
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.View
+import android.widget.RadioGroup
+import com.readystatesoftware.systembartint.SystemBarTintManager
 import com.shoping.yt.R
+import com.shoping.yt.databinding.ActivityMainBinding
+import com.shoping.yt.fragment.ClassifyFragment
 import com.shoping.yt.fragment.HomeFragment
-import com.shoping.yt.utils.DimenUtitls
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var bind: ActivityMainBinding;
 
+    lateinit var sbtm: SystemBarTintManager;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
 
+        bind = DataBindingUtil.bind(rootView)
+
         initFragment()
 
-        initNavigetion()
+        sbtm = SystemBarTintManager(this)
+
+
     }
 
-    private fun initNavigetion() {
-
-//        if (DimenUtitls.isExceedKITKAT()&&DimenUtitls.checkDeviceHasNavigationBar(this)) {
-//            val dpi = DimenUtitls.getDaoHangHeight(this)
-//            val layoutParams = view_fill.layoutParams
-//            layoutParams.height =dpi
-//            view_fill.layoutParams =layoutParams
-//            view_fill.visibility = View.VISIBLE
-//        }
-    }
 
     lateinit var homeFragment: HomeFragment
+
+    var current = R.id.rb_home
+
+    public fun getstm(): SystemBarTintManager {
+        return sbtm
+    }
 
     private fun initFragment() {
 
         val beginTransaction = supportFragmentManager.beginTransaction()
 
         homeFragment = HomeFragment()
+        var bundle = Bundle()
 
-        beginTransaction.add(R.id.fl_containt, homeFragment, HomeFlag)
+        homeFragment.arguments
+
+
+        beginTransaction.add(R.id.fl_containt, homeFragment, "" + R.id.rb_home)
+
+        beginTransaction.commit()
+
+        bind.rgNavigation.setOnCheckedChangeListener({ group: RadioGroup?, checkedId: Int ->
+
+            hildAndShowFragment(current, checkedId)
+
+        })
+    }
+
+    private fun hildAndShowFragment(before: Int, current: Int) {
+
+        val beginTransaction = supportFragmentManager.beginTransaction()
+
+        val beforeFragment = supportFragmentManager.findFragmentByTag("" + before)
+
+        var currentFragment = supportFragmentManager.findFragmentByTag("" + current)
+
+        if (currentFragment == null) {
+            when (current) {
+                R.id.rb_classify -> {
+                    currentFragment = ClassifyFragment()
+
+                }
+            }
+        }
+
+        beginTransaction.hide(beforeFragment)
+
+        if (currentFragment.isAdded) {
+
+            beginTransaction.show(currentFragment)
+        } else {
+            beginTransaction.add(R.id.fl_containt, currentFragment, "" + current)
+        }
+
+        this.current = current
 
         beginTransaction.commit()
 
     }
 
-     val HomeFlag = "home"
+    val HomeFlag = "home"
 
 
     private fun initView() {
 
     }
 
-companion object {
-    val TEST1 = "home"
-    const val TEST2 = "home"
-}
-    /**
-     * A native method that is implemented by the 'native-lib' native library,
-     * which is packaged with this application.
-     */
-    external fun stringFromJNI(): String
+    companion object {
 
 
+    }
 }

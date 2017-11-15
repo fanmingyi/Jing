@@ -24,10 +24,10 @@
         android:id="@+id/tv_title"
         android:textSize="23sp"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:text="骚年 你该换鞋了"
+        android:text="老婆 你该换遮瑕霜了"
         android:textColor="#fff"
         android:textStyle="bold"
         android:layout_height="wrap_content" />
