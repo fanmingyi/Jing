@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:background="#F1F2F2"
     android:clickable="true"
-
     android:layout_height="match_parent">
 
     <android.support.v4.widget.NestedScrollView
@@ -318,10 +317,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/line_finalbottom"
                 android:layout_height="wrap_content"/>
 
-            <View
-                app:layout_constraintTop_toBottomOf="@+id/rv_custom"
-                android:layout_width="match_parent"
-                android:layout_height="7dp"/>
+
         </android.support.constraint.ConstraintLayout>
 
     </android.support.v4.widget.NestedScrollView>

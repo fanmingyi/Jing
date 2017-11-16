@@ -8,7 +8,7 @@
             type="com.shoping.yt.activity.MainActivity" />
     </data>
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/rootView"
@@ -16,37 +16,22 @@
         android:layout_height="match_parent"
         tools:context="com.shoping.yt.activity.MainActivity">
 
-        <FrameLayout
-            android:id="@+id/fl_containt"
-            app:layout_constraintTop_toTopOf="parent"
-
-            app:layout_constraintBottom_toTopOf="@+id/rg_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" />
-
-
-        <View
-            android:id="@+id/view_fill"
-            android:layout_width="match_parent"
-            android:layout_height="0.0000001dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent" />
 
         <RadioGroup
             android:id="@+id/rg_navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:background="#fff"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@id/view_fill">
+            android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/rb_home"
-                android:checked="true"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:button="@null"
+                android:checked="true"
                 android:drawableTop="@drawable/btn_home_main_sl"
                 android:gravity="center"
                 android:text="主页"
@@ -86,7 +71,7 @@
                 android:textColor="@drawable/btn_tx_main_sl" />
 
             <RadioButton
-
+                android:id="@+id/rb_mime"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -101,8 +86,17 @@
         <View
             android:layout_width="wrap_content"
             android:layout_height="0.5dp"
-            android:background="#ddd"
-            app:layout_constraintBottom_toTopOf="@+id/rg_navigation" />
-    </android.support.constraint.ConstraintLayout>
+            android:layout_alignTop="@id/rg_navigation"
+            android:background="#ddd" />
+
+        <RelativeLayout
+            android:id="@+id/fl_containt"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_above="@+id/rg_navigation"
+            android:background="#f00" />
+
+    </RelativeLayout>
 
 </layout>

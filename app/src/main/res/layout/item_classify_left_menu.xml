@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="94dp"
     android:background="#fff"
-    android:layout_height="80dp">
+    android:id="@+id/rootView"
+    android:layout_height="58dp">
     <View
         android:background="#ddd"
         app:layout_constraintTop_toTopOf="parent"
@@ -14,8 +15,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="分类"
-        android:textColor="#333"
-        android:textSize="20sp"
+        android:textColor="@color/color_category_menu_tx"
+        android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
