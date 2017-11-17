@@ -72,12 +72,16 @@ class ClassifyFragment : Fragment() {
 
             view.setTag(R.id.menu_click_index, position)
         }
-        rv_menu.post {
+        rv_menu.postDelayed({
             val beforeView = linearLayoutManager.getChildAt(0)
-            beforeView.performClick()
+
+            beforeView?.let {
+
+                it.performClick()
+            }
 
 
-        }
+        },1000)
 
     }
 
