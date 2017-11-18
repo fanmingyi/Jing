@@ -218,15 +218,7 @@ class HomeFragment : Fragment() {
         mainMiddleNavigationAdapter.setOnItemDragListener(onItemDragListener)
     }
 
-    internal var onItemSwipeListener: OnItemSwipeListener = object : OnItemSwipeListener {
-        override fun onItemSwipeStart(viewHolder: RecyclerView.ViewHolder, pos: Int) {}
-        override fun clearView(viewHolder: RecyclerView.ViewHolder, pos: Int) {}
-        override fun onItemSwiped(viewHolder: RecyclerView.ViewHolder, pos: Int) {}
 
-        override fun onItemSwipeMoving(canvas: Canvas, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, isCurrentlyActive: Boolean) {
-
-        }
-    }
     internal var onItemDragListener: OnItemDragListener = object : OnItemDragListener {
         override fun onItemDragStart(viewHolder: RecyclerView.ViewHolder, pos: Int) {}
         override fun onItemDragMoving(source: RecyclerView.ViewHolder, from: Int, target: RecyclerView.ViewHolder, to: Int) {}

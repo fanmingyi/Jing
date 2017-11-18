@@ -9,6 +9,7 @@ import android.widget.RadioGroup
 import com.readystatesoftware.systembartint.SystemBarTintManager
 import com.shoping.yt.R
 import com.shoping.yt.databinding.ActivityMainBinding
+import com.shoping.yt.fragment.CartFragment
 import com.shoping.yt.fragment.ClassifyFragment
 import com.shoping.yt.fragment.HomeFragment
 import com.shoping.yt.fragment.MineFragment
@@ -58,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
         beginTransaction.commit()
 
-        rg_navigation.setOnCheckedChangeListener({ group: RadioGroup?, checkedId: Int ->
+        rg_navigation.setOnCheckedChangeListener({ _: RadioGroup?, checkedId: Int ->
 
             hildAndShowFragment(current, checkedId)
 
@@ -82,6 +83,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.rb_mime -> {
                     currentFragment = MineFragment()
 
+                }
+                R.id.rb_cart->{
+                    currentFragment = CartFragment()
                 }
             }
         }

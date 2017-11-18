@@ -49,16 +49,7 @@
 
                 android:textColor="@drawable/btn_tx_main_sl" />
 
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
 
-                android:drawableTop="@drawable/btn_qz_main_sl"
-                android:gravity="center"
-                android:text="商业圈"
-                android:textColor="@drawable/btn_tx_main_sl" />
 
             <RadioButton
                 android:layout_width="0dp"
@@ -68,6 +59,7 @@
                 android:drawableTop="@drawable/btn_cart_main_sl"
                 android:gravity="center"
                 android:text="购物车"
+                android:id="@+id/rb_cart"
                 android:textColor="@drawable/btn_tx_main_sl" />
 
             <RadioButton
@@ -95,7 +87,7 @@
             android:layout_height="100dp"
             android:layout_alignParentTop="true"
             android:layout_above="@+id/rg_navigation"
-            android:background="#f00" />
+           />
 
     </RelativeLayout>
 

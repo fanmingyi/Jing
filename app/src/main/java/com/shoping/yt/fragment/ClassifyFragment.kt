@@ -81,7 +81,7 @@ class ClassifyFragment : Fragment() {
             }
 
 
-        },1000)
+        },300)
 
     }
 

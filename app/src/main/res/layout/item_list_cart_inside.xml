@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+ android:paddingLeft="20dp"
+    android:paddingRight="7dp">
+
+    <CheckBox
+        android:id="@+id/cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/selector_checkbox"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@mipmap/pg_shoes"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/cb"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:textColor="#3f4041"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintTop_toTopOf="@+id/iv_logo"
+        app:layout_constraintLeft_toRightOf="@id/iv_logo"
+        android:layout_width="wrap_content"
+        android:id="@+id/tv_title"
+        android:text="高腰显瘦百褶裙"
+        android:layout_height="wrap_content" />
+    <TextView
+
+        android:layout_marginLeft="10dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintLeft_toRightOf="@id/iv_logo"
+        android:layout_width="wrap_content"
+        android:id="@+id/tv_specification"
+        app:layout_constraintBottom_toTopOf="@+id/tv_prise"
+        android:text="颜色：浅蓝，尺码：S"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_prise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="￥288.99"
+        android:layout_marginBottom="10dp"
+        android:textColor="#020202"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/iv_logo"
+        app:layout_constraintTop_toBottomOf="@id/tv_specification" />
+
+    <TextView
+        android:id="@+id/tv_prise_original"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="￥998.99"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_prise"
+        app:layout_constraintStart_toEndOf="@+id/tv_prise" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="x1"
+        android:textColor="#000"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>
