@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.readystatesoftware.systembartint.SystemBarTintManager
 import com.shoping.yt.FLAG
 import com.shoping.yt.R
@@ -17,6 +18,7 @@ import com.shoping.yt.activity.MainActivity
 import com.shoping.yt.adapter.ClassifyLeftMenuAdapter
 import com.shoping.yt.adapter.ClassifyRightshowAdapter
 import com.shoping.yt.bean.ClassifyRightgoodBean
+import com.shoping.yt.bean.MenuBean
 import com.shoping.yt.utils.DimenUtitls
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_classify.*
@@ -35,7 +37,7 @@ class ClassifyFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        classifyName = arrayOf("推荐分类", "京东超市", "国际名牌", "奢侈品", "全球购", "男装", "女装", "男鞋", "女鞋", "手机", "汽车用品", "家具家装", "礼品鲜花", "宠物生活")
+        classifyName = arrayOf("推荐分类", "京东超市", "国际名牌", "奢侈品", "全球购", "男装", "女装", "男鞋", "女鞋", "手机", "汽车用品", "家具家装", "礼品鲜花", "宠物生活", "家具家装", "礼品鲜花", "宠物生活")
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
@@ -47,30 +49,48 @@ class ClassifyFragment : Fragment() {
 
     }
 
+    internal var d: BaseQuickAdapter.OnItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
+
+
+    }
+    var overflag: Int = -1
     private fun initLeftNavigation() {
         val linearLayoutManager = LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false)
         val strings = Arrays.asList(*classifyName!!)
-        val classifyLeftMenuAdapter = ClassifyLeftMenuAdapter(strings)
+        val data = ArrayList<MenuBean>()
+        strings.forEach {
+            data.add(MenuBean(it, false))
+
+        }
+        val classifyLeftMenuAdapter = ClassifyLeftMenuAdapter(data)
+
         rv_menu.layoutManager = linearLayoutManager
         rv_menu.adapter = classifyLeftMenuAdapter
-
+        classifyLeftMenuAdapter.bindToRecyclerView(rv_menu)
         classifyLeftMenuAdapter.setOnItemClickListener { adapter, view, position ->
 
-            val beforView = linearLayoutManager.getChildAt(current)
-            beforView.setBackgroundColor(Color.WHITE)
-            beforView.findViewById<TextView>(R.id.tv).setTextColor(mContext.resources.getColor(R.color.color_category_menu_tx))
-            current = linearLayoutManager.getPosition(view)
 
+            val beforView = adapter.getViewByPosition(current, R.id.rootView)
+            val item = classifyLeftMenuAdapter.getItem(current)
+            item?.isFlag = false
 
-            beforView.setTag(R.id.menu_click_index, -1)
-
+            if (beforView != null) {
+                beforView.setBackgroundColor(Color.WHITE)
+                beforView.findViewById<TextView>(R.id.tv)?.setTextColor(mContext.resources.getColor(R.color.color_category_menu_tx))
+            }
 
             view.setBackgroundColor(mContext.resources.getColor(R.color.bg))
 
             view.findViewById<TextView>(R.id.tv).setTextColor(mContext.resources.getColor(R.color.category_menu_press))
 
 
-            view.setTag(R.id.menu_click_index, position)
+            val positionItem = classifyLeftMenuAdapter.getItem(position)
+
+            positionItem?.isFlag = true
+
+            adapter.notifyItemChanged(current)
+            current = position
+
         }
         rv_menu.postDelayed({
             val beforeView = linearLayoutManager.getChildAt(0)
@@ -81,7 +101,7 @@ class ClassifyFragment : Fragment() {
             }
 
 
-        },300)
+        }, 300)
 
     }
 

@@ -20,8 +20,10 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemDragListener;
 import com.chad.library.adapter.base.listener.OnItemSwipeListener;
+import com.shoping.yt.adapter.CartShopAdapter;
 import com.shoping.yt.utils.DimenUtitls;
 
 import org.junit.Test;
@@ -41,16 +43,17 @@ import static android.webkit.ConsoleMessage.MessageLevel.LOG;
  */
 @RunWith(AndroidJUnit4.class)
 public class JAVAInstrumentedTest {
+
     @Test
     public void test() {
 
-       new CompoundButton.OnCheckedChangeListener(){
+        CartShopAdapter d = null;
+        d.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
 
-           @Override
-           public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-           }
-       };
+            }
+        });
     }
     OnItemDragListener onItemDragListener = new OnItemDragListener() {
         @Override
