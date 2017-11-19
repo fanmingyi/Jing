@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.listener.OnItemDragListener;
@@ -43,20 +44,13 @@ public class JAVAInstrumentedTest {
     @Test
     public void test() {
 
-       View v = null;
+       new CompoundButton.OnCheckedChangeListener(){
 
-        Activity mContext = null;
-        new GridLayoutManager(mContext, 4){
-            @Override
-            public boolean canScrollHorizontally() {
-                return false;
-            }
+           @Override
+           public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
+           }
+       };
     }
     OnItemDragListener onItemDragListener = new OnItemDragListener() {
         @Override

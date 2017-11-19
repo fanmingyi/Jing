@@ -22,6 +22,10 @@ public class JAVAUnitTest {
 
     @Test
     public void test() {
+        java.text.DecimalFormat   df   =new   java.text.DecimalFormat("#.00");
+
+        String format = df.format(3.888);
+        System.out.println("======================================FMY"+format);
 
     }
 }

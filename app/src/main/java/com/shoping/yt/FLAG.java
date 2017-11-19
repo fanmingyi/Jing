@@ -28,4 +28,7 @@ public class FLAG {
     public static final int MENU_ISCLICK = 0;
     //被点击条目的viewhold下标
     public static final int MENU_CLICK_INDEX = 1;
+    public static final String NATIVE_CARTCHECED_BRODCAST = "CART_FLASH_BRODCAST";
+
+    public static final String NATIVE_CARTALL_CHECKED_BRODCAST = "NATIVE_CARTALL_CHECKED_BRODCAST";
 }

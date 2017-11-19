@@ -1,11 +1,13 @@
 package com.shoping.yt.adapter;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseItemDraggableAdapter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shoping.yt.R;
 import com.shoping.yt.bean.ClassifyRightgoodBean;
@@ -27,9 +29,12 @@ public class ClassifyRightshowInsideAdapter extends BaseItemDraggableAdapter<Cla
     @Override
     protected void convert(BaseViewHolder helper, ClassifyRightgoodInsideBean item) {
         helper.setText(R.id.tv_classify_titile, item.getInfomation());
-//        helper.setText(R.id.tv_classify_titile, item.getInfomation());iv_show_good
+
         ImageView iv = helper.getView(R.id.iv_show_good);
         Picasso.with(mContext).load(item.getImgUri()).into(iv);
+
+
+
     }
 
 

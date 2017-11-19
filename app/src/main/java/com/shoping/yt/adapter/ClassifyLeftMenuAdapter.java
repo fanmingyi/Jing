@@ -36,7 +36,6 @@ public class ClassifyLeftMenuAdapter extends BaseItemDraggableAdapter<String, Ba
             if (position == index) {
                 view.setBackgroundColor(mContext.getResources().getColor(R.color.bg));
                 helper.setTextColor(R.id.tv, mContext.getResources().getColor(R.color.category_menu_press));
-
             } else {
                 view.setBackgroundColor(Color.WHITE);
                 helper.setTextColor(R.id.tv, mContext.getResources().getColor(R.color.color_category_menu_tx));

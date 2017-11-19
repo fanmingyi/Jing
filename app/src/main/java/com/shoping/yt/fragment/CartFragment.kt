@@ -1,30 +1,31 @@
 package com.shoping.yt.fragment
 
 
-import android.app.Activity
+import android.content.BroadcastReceiver
 import android.content.Context
-import android.graphics.Color
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
+import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import com.chad.library.adapter.base.listener.OnItemDragListener
+import android.widget.CompoundButton
 import com.readystatesoftware.systembartint.SystemBarTintManager
+import com.shoping.yt.FLAG.NATIVE_CARTALL_CHECKED_BRODCAST
+import com.shoping.yt.FLAG.NATIVE_CARTCHECED_BRODCAST
 
 import com.shoping.yt.R
 import com.shoping.yt.activity.MainActivity
 import com.shoping.yt.adapter.CartShopAdapter
-import com.shoping.yt.adapter.ClassifyLeftMenuAdapter
+import com.shoping.yt.bean.CartGoodsBean
 import com.shoping.yt.utils.DimenUtitls
 import kotlinx.android.synthetic.main.fragment_cart.*
-import kotlinx.android.synthetic.main.fragment_classify.*
-import java.util.*
+import kotlinx.android.synthetic.main.item_list_cart.*
 import kotlin.collections.ArrayList
 
 
@@ -43,6 +44,11 @@ class CartFragment : Fragment() {
 
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
+
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -53,30 +59,138 @@ class CartFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         initNavigation()
         initAdapter()
+        initBrodCast()
     }
 
+    lateinit var myBroadCastReceiver: MyBroadCastReceiver
+
+    private fun initBrodCast() {
+
+        myBroadCastReceiver = MyBroadCastReceiver()
+
+        val instance = LocalBroadcastManager.getInstance(mMainActivity)
+
+        val intentFilter = IntentFilter(NATIVE_CARTCHECED_BRODCAST)
+
+        instance.registerReceiver(myBroadCastReceiver, intentFilter)
+
+        cb_all.setOnCheckedChangeListener(cb_allListner)
+
+    }
+
+    val cb_allListner = CompoundButton.OnCheckedChangeListener { cb, isChecked ->
+        var index = 1
+        dataAll
+                .flatMap { it }
+                .forEach {
+                    it.isCheck = isChecked
+                    cartShopAdapter.notifyDataSetChanged()
+
+                    val intent = Intent(NATIVE_CARTCHECED_BRODCAST)
+                    intent.putExtra(NATIVE_CARTCHECED_BRODCAST, it)
+                    LocalBroadcastManager.getInstance(mMainActivity).sendBroadcast(intent)
+                }
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        val instance = LocalBroadcastManager.getInstance(mMainActivity)
+        instance.unregisterReceiver(myBroadCastReceiver)
+
+    }
+
+    var dataAll = ArrayList<ArrayList<CartGoodsBean>>()
+    lateinit var cartShopAdapter: CartShopAdapter
     private fun initAdapter() {
 
-        val data = ArrayList<String>()
-        data.add("")
-        data.add("")
-        data.add("")
-        val cartShopAdapter = CartShopAdapter(data)
+        for (i in 0..2) {
+            var data = ArrayList<CartGoodsBean>()
+            data.add(CartGoodsBean(false, 288.99f))
+            data.add(CartGoodsBean(false, 288.99f))
+            data.add(CartGoodsBean(false, 288.99f))
+            dataAll.add(data)
+        }
 
+
+
+        cartShopAdapter = CartShopAdapter(dataAll, mMainActivity)
+
+        val intentFilter = IntentFilter()
+
+        intentFilter.addAction(NATIVE_CARTCHECED_BRODCAST)
 
         val linearLayoutManager = LinearLayoutManager(mMainActivity, LinearLayoutManager.VERTICAL, false)
 
         rv_goods.layoutManager = linearLayoutManager
         rv_goods.adapter = cartShopAdapter
 
+
+    }
+
+
+    val goods: ArrayList<String> = ArrayList()
+
+    inner class MyBroadCastReceiver : BroadcastReceiver() {
+
+
+        override fun onReceive(context: Context, intent: Intent) {
+
+            val parcelableExtra = intent.getParcelableExtra<CartGoodsBean>(NATIVE_CARTCHECED_BRODCAST)
+
+
+            val contains = goods.contains(parcelableExtra.id)
+
+            val text = tv_prise.text
+            var toFloat = text.toString().toFloat()
+            if (contains) {
+
+                if (parcelableExtra.isCheck) {
+                } else {
+                    toFloat -= parcelableExtra.prise
+                    goods.remove(parcelableExtra.id)
+                }
+
+            } else {
+
+
+                if (parcelableExtra.isCheck) {
+                    goods.add(parcelableExtra.id)
+                    toFloat += parcelableExtra.prise
+                }
+            }
+
+            val decimalFormat = java.text.DecimalFormat("#0.00")
+
+            val format = decimalFormat.format(toFloat)
+
+            tv_prise.text = format.toString()
+
+            if (!parcelableExtra.isCheck) {
+                cb_all.setOnCheckedChangeListener(null)
+                cb_all.isChecked = false
+                cb_all.setOnCheckedChangeListener(cb_allListner)
+            }
+
+            var count = 0
+
+            dataAll.forEach {
+                count += it.size
+            }
+
+            if (count == goods.size) {
+                cb_all.setOnCheckedChangeListener(null)
+                cb_all.isChecked = true
+                cb_all.setOnCheckedChangeListener(cb_allListner)
+            }
+
+        }
     }
 
     private fun initNavigation() {
         sbtm = mMainActivity.getstm()
 
-//        mMainActivity.resources.getColor(R.color.titilegrey)
-
-        sbtm.setTintColor(Color.BLUE)
+        sbtm.setTintColor(mMainActivity.resources.getColor(R.color.titilegrey))
 
         val systemtHeight = DimenUtitls.getSystemtHeight(mMainActivity)
 
@@ -85,7 +199,6 @@ class CartFragment : Fragment() {
         layoutParams.topMargin = systemtHeight
 
         tb_title_cart.layoutParams = layoutParams
-
 
     }
 

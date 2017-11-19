@@ -46,6 +46,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <CheckBox
+            android:id="@+id/cb_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -59,10 +60,19 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tv_prise_hold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
-            android:text="合计:¥54.00"
+            android:text="合计:¥"
+            android:textColor="#232326"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/tv_prise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.00"
             android:textColor="#232326"
             android:textSize="17sp" />
 
@@ -84,19 +94,20 @@
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_goods"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:overScrollMode="never"
-        android:id="@+id/rv_goods"
         app:layout_constraintBottom_toTopOf="@+id/ll_bottombill"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tb_title_cart" />
+
     <View
-        android:background="#ddd"
-        app:layout_constraintTop_toBottomOf="@id/tb_title_cart"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"/>
+        android:layout_height="0.5dp"
+        android:background="#ddd"
+        app:layout_constraintTop_toBottomOf="@id/tb_title_cart" />
 
 
 </android.support.constraint.ConstraintLayout>
