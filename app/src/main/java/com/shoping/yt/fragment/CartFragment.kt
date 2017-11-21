@@ -84,12 +84,14 @@ class CartFragment : Fragment() {
                 .flatMap { it }
                 .forEach {
                     it.isCheck = isChecked
-                    cartShopAdapter.notifyDataSetChanged()
 
-                    val intent = Intent(NATIVE_CARTCHECED_BRODCAST)
-                    intent.putExtra(NATIVE_CARTCHECED_BRODCAST, it)
-                    LocalBroadcastManager.getInstance(mMainActivity).sendBroadcast(intent)
+//
+//                    val intent = Intent(NATIVE_CARTCHECED_BRODCAST)
+//                    intent.putExtra(NATIVE_CARTCHECED_BRODCAST, it)
+//                    LocalBroadcastManager.getInstance(mMainActivity).sendBroadcast(intent)
                 }
+        cartShopAdapter.myNotifyAll();
+
     }
 
 
@@ -144,12 +146,12 @@ class CartFragment : Fragment() {
 
             //当前是滑动删除
             if (intent.getBooleanExtra(NATIVE_CART_IS_SWIED_DEL, false)) {
-
+//
                 if (contains) {
                     toFloat -= parcelableExtra.prise
                     goods.remove(parcelableExtra.id)
                 }
-                val iterator = dataAll.iterator()
+//
                 var arrIndex = -1
                 dataAll.forEachIndexed({ index, arrayList ->
                     if (arrayList.size == 0) {
@@ -159,9 +161,9 @@ class CartFragment : Fragment() {
                 })
                 if (arrIndex!=-1) {
                     dataAll.removeAt(arrIndex)
-//                    cartShopAdapter.notifyDataSetChanged()
+                    cartShopAdapter.notifyItemRemoved(arrIndex)
                 }
-//
+
 
             } else {
                 if (contains) {

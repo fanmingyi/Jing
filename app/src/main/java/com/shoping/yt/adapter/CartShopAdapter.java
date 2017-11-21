@@ -50,6 +50,11 @@ public class CartShopAdapter extends BaseItemDraggableAdapter<ArrayList<CartGood
 
     }
 
+    public void myNotifyAll() {
+        for (CartShowInsideAdapter adapter : adapters) {
+            adapter.notifyDataSetChanged();
+        }
+    }
 
     OnItemDragListener onItemDragListener = new OnItemDragListener() {
         @Override
@@ -78,9 +83,8 @@ public class CartShopAdapter extends BaseItemDraggableAdapter<ArrayList<CartGood
         @Override
         public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {
 
-
+//
             CartGoodsBean it = (CartGoodsBean) viewHolder.itemView.getTag();
-
 
 
             Intent intent = new Intent(NATIVE_CARTCHECED_BRODCAST);
@@ -96,6 +100,8 @@ public class CartShopAdapter extends BaseItemDraggableAdapter<ArrayList<CartGood
 
         }
     };
+
+    ArrayList<CartShowInsideAdapter> adapters = new ArrayList<>();
 
 
     @Override
@@ -133,8 +139,8 @@ public class CartShopAdapter extends BaseItemDraggableAdapter<ArrayList<CartGood
 
             @Override
             public void change(CheckBox checkBox, CartGoodsBean bean) {
-                checkBox.setTag(true);
-                if (checkBox.isChecked()) {
+                cb.setTag(true);
+
                     boolean myflag = false;
 
                     for (CartGoodsBean cartGoodsBean : item) {
@@ -149,18 +155,16 @@ public class CartShopAdapter extends BaseItemDraggableAdapter<ArrayList<CartGood
                     } else {
                         cb.setChecked(true);
                     }
-                } else {
-                    cb.setChecked(false);
-                }
 
-                checkBox.setTag(false);
+
+                cb.setTag(false);
             }
         });
         final CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Object tag1 = buttonView.getTag();
-                if (tag1!=null) {
+                if (tag1 != null) {
                     boolean tag = (boolean) tag1;
                     if (tag) {
                         return;
@@ -174,8 +178,9 @@ public class CartShopAdapter extends BaseItemDraggableAdapter<ArrayList<CartGood
                 try {
 
                     if (!rv.isComputingLayout()) {
-                        CartShopAdapter.this.notifyDataSetChanged();
-                        cartShowInsideAdapter.notifyDataSetChanged();
+//                        CartShopAdapter.this.notifyDataSetChanged();
+                        CartShopAdapter.this.myNotifyAll();
+//                        cartShowInsideAdapter.notifyDataSetChanged();
                     }
 
                 } catch (Exception e) {
@@ -199,6 +204,7 @@ public class CartShopAdapter extends BaseItemDraggableAdapter<ArrayList<CartGood
         cartShowInsideAdapter.enableSwipeItem();
         cartShowInsideAdapter.setOnItemSwipeListener(onItemSwipeListener);
 
+        adapters.add(cartShowInsideAdapter);
         cb.setOnCheckedChangeListener(onCheckedChangeListener);
 
     }

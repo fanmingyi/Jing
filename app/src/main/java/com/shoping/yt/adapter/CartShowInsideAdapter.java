@@ -34,7 +34,7 @@ public class CartShowInsideAdapter extends BaseItemDraggableAdapter<CartGoodsBea
     @Override
     protected void convert(final BaseViewHolder helper, final CartGoodsBean item) {
 
-        helper.itemView.setTag(item);
+        helper.itemView.setTag(item.clone());
 
         TextView tv_prise_original = helper.getView(R.id.tv_prise_original);
 
@@ -46,21 +46,25 @@ public class CartShowInsideAdapter extends BaseItemDraggableAdapter<CartGoodsBea
 
         cb.setOnCheckedChangeListener(null);
         if (item.isCheck()) {
+
             cb.setChecked(true);
 
-                changeCh(true, item);
+            changeCh(true, item);
 
         } else {
 
-                changeCh(false, item);
+            changeCh(false, item);
 
             cb.setChecked(false);
+        }
+        if (listner != null) {
+            listner.change(cb, item);
         }
         cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                    changeCh(isChecked, (CartGoodsBean) item.clone());
+                item.setCheck(isChecked);
+                changeCh(isChecked, (CartGoodsBean) item.clone());
 
                 if (listner != null) {
                     listner.change(cb, item);
@@ -71,12 +75,12 @@ public class CartShowInsideAdapter extends BaseItemDraggableAdapter<CartGoodsBea
     }
 
     private void changeCh(boolean isChecked, CartGoodsBean item) {
-        item.setCheck(isChecked);
+
         CartGoodsBean clone = (CartGoodsBean) item.clone();
         Intent intent = new Intent(NATIVE_CARTCHECED_BRODCAST);
         intent.putExtra(NATIVE_CARTCHECED_BRODCAST, clone);
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
-
+//
 
 }
