@@ -31,4 +31,5 @@ public class FLAG {
     public static final String NATIVE_CARTCHECED_BRODCAST = "CART_FLASH_BRODCAST";
 
     public static final String NATIVE_CARTALL_CHECKED_BRODCAST = "NATIVE_CARTALL_CHECKED_BRODCAST";
+    public static final String NATIVE_CART_IS_SWIED_DEL = "NATIVE_CART_IS_SWIED_DEL";
 }

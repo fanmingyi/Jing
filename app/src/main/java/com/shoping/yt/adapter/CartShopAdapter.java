@@ -10,6 +10,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CheckBox;
@@ -32,6 +33,7 @@ import java.util.List;
 
 import static com.shoping.yt.FLAG.NATIVE_CARTALL_CHECKED_BRODCAST;
 import static com.shoping.yt.FLAG.NATIVE_CARTCHECED_BRODCAST;
+import static com.shoping.yt.FLAG.NATIVE_CART_IS_SWIED_DEL;
 
 /**
  * Created by fmy on 2017/11/13.
@@ -39,15 +41,12 @@ import static com.shoping.yt.FLAG.NATIVE_CARTCHECED_BRODCAST;
 
 public class CartShopAdapter extends BaseItemDraggableAdapter<ArrayList<CartGoodsBean>, BaseViewHolder> {
 
-    private List<ArrayList<CartGoodsBean>> data;
-    private CartShowInsideAdapter cartShowInsideAdapter;
+
     private LinearLayoutManager linearLayoutManager;
     private RecyclerView rv;
 
     public CartShopAdapter(List<ArrayList<CartGoodsBean>> data, Context context) {
         super(R.layout.item_list_cart, data);
-        this.data = data;
-
 
     }
 
@@ -80,6 +79,16 @@ public class CartShopAdapter extends BaseItemDraggableAdapter<ArrayList<CartGood
         public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {
 
 
+            CartGoodsBean it = (CartGoodsBean) viewHolder.itemView.getTag();
+
+
+
+            Intent intent = new Intent(NATIVE_CARTCHECED_BRODCAST);
+            intent.putExtra(NATIVE_CART_IS_SWIED_DEL, true);
+            Log.e("FMY", "滑动删除==" + it.getID() + " 价格" + it.getPrise());
+            intent.putExtra(NATIVE_CARTCHECED_BRODCAST, (CartGoodsBean)it.clone());
+            LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+
         }
 
         @Override
@@ -92,26 +101,15 @@ public class CartShopAdapter extends BaseItemDraggableAdapter<ArrayList<CartGood
     @Override
     protected void convert(final BaseViewHolder helper, final ArrayList<CartGoodsBean> item) {
 
-        final CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+
+        helper.getView(R.id.nsv_root).setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                for (CartGoodsBean cartGoodsBean : item) {
-                    cartGoodsBean.setCheck(isChecked);
-                }
-                try {
-
-                    if (!rv.isComputingLayout()) {
-                        CartShopAdapter.this.notifyDataSetChanged();
-                        cartShowInsideAdapter.notifyDataSetChanged();
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.e("FMY", "被触摸");
+                return false;
             }
-        };
+        });
+
         final CheckBox cb = (CheckBox) helper.getView(R.id.cb);
         rv = helper.getView(R.id.rv_cart_inside);
 
@@ -131,18 +129,18 @@ public class CartShopAdapter extends BaseItemDraggableAdapter<ArrayList<CartGood
         }
 
 
-        cartShowInsideAdapter = new CartShowInsideAdapter(item, new IRbChangListener() {
+        final CartShowInsideAdapter cartShowInsideAdapter = new CartShowInsideAdapter(item, new IRbChangListener() {
 
             @Override
             public void change(CheckBox checkBox, CartGoodsBean bean) {
-                cb.setOnCheckedChangeListener(null);
+                checkBox.setTag(true);
                 if (checkBox.isChecked()) {
-                boolean myflag =false;
+                    boolean myflag = false;
 
                     for (CartGoodsBean cartGoodsBean : item) {
                         if (!cartGoodsBean.isCheck()) {
-                            myflag =true;
-                           break;
+                            myflag = true;
+                            break;
                         }
                     }
                     if (myflag) {
@@ -154,11 +152,38 @@ public class CartShopAdapter extends BaseItemDraggableAdapter<ArrayList<CartGood
                 } else {
                     cb.setChecked(false);
                 }
-                cb.setOnCheckedChangeListener(onCheckedChangeListener);
 
+                checkBox.setTag(false);
             }
         });
+        final CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Object tag1 = buttonView.getTag();
+                if (tag1!=null) {
+                    boolean tag = (boolean) tag1;
+                    if (tag) {
+                        return;
+                    }
+                }
 
+
+                for (CartGoodsBean cartGoodsBean : item) {
+                    cartGoodsBean.setCheck(isChecked);
+                }
+                try {
+
+                    if (!rv.isComputingLayout()) {
+                        CartShopAdapter.this.notifyDataSetChanged();
+                        cartShowInsideAdapter.notifyDataSetChanged();
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
         rv.setAdapter(cartShowInsideAdapter);
         linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         rv.setLayoutManager(linearLayoutManager);
@@ -170,6 +195,9 @@ public class CartShopAdapter extends BaseItemDraggableAdapter<ArrayList<CartGood
         // 开启拖拽
         cartShowInsideAdapter.enableDragItem(itemTouchHelper);
         cartShowInsideAdapter.setOnItemDragListener(onItemDragListener);
+
+        cartShowInsideAdapter.enableSwipeItem();
+        cartShowInsideAdapter.setOnItemSwipeListener(onItemSwipeListener);
 
         cb.setOnCheckedChangeListener(onCheckedChangeListener);
 

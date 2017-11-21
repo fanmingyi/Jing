@@ -1,7 +1,5 @@
 package com.shoping.yt.adapter;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.v4.content.LocalBroadcastManager;
@@ -36,10 +34,11 @@ public class CartShowInsideAdapter extends BaseItemDraggableAdapter<CartGoodsBea
     @Override
     protected void convert(final BaseViewHolder helper, final CartGoodsBean item) {
 
+        helper.itemView.setTag(item);
+
         TextView tv_prise_original = helper.getView(R.id.tv_prise_original);
 
         tv_prise_original.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-
 
         helper.setText(R.id.tv_prise, "¥" + item.getPrise());
 
@@ -48,15 +47,21 @@ public class CartShowInsideAdapter extends BaseItemDraggableAdapter<CartGoodsBea
         cb.setOnCheckedChangeListener(null);
         if (item.isCheck()) {
             cb.setChecked(true);
-            changeCh(true, item);
+
+                changeCh(true, item);
+
         } else {
-            changeCh(false, item);
+
+                changeCh(false, item);
+
             cb.setChecked(false);
         }
         cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                changeCh(isChecked, item);
+
+                    changeCh(isChecked, (CartGoodsBean) item.clone());
+
                 if (listner != null) {
                     listner.change(cb, item);
                 }
@@ -67,8 +72,9 @@ public class CartShowInsideAdapter extends BaseItemDraggableAdapter<CartGoodsBea
 
     private void changeCh(boolean isChecked, CartGoodsBean item) {
         item.setCheck(isChecked);
+        CartGoodsBean clone = (CartGoodsBean) item.clone();
         Intent intent = new Intent(NATIVE_CARTCHECED_BRODCAST);
-        intent.putExtra(NATIVE_CARTCHECED_BRODCAST, item);
+        intent.putExtra(NATIVE_CARTCHECED_BRODCAST, clone);
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
 

@@ -16,8 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import com.readystatesoftware.systembartint.SystemBarTintManager
-import com.shoping.yt.FLAG.NATIVE_CARTALL_CHECKED_BRODCAST
-import com.shoping.yt.FLAG.NATIVE_CARTCHECED_BRODCAST
+import com.shoping.yt.FLAG.*
 
 import com.shoping.yt.R
 import com.shoping.yt.activity.MainActivity
@@ -25,6 +24,7 @@ import com.shoping.yt.adapter.CartShopAdapter
 import com.shoping.yt.bean.CartGoodsBean
 import com.shoping.yt.utils.DimenUtitls
 import kotlinx.android.synthetic.main.fragment_cart.*
+import kotlinx.android.synthetic.main.fragment_classify.*
 import kotlinx.android.synthetic.main.item_list_cart.*
 import kotlin.collections.ArrayList
 
@@ -103,12 +103,12 @@ class CartFragment : Fragment() {
     var dataAll = ArrayList<ArrayList<CartGoodsBean>>()
     lateinit var cartShopAdapter: CartShopAdapter
     private fun initAdapter() {
-
+        var id = 0;
         for (i in 0..2) {
             var data = ArrayList<CartGoodsBean>()
-            data.add(CartGoodsBean(false, 288.99f))
-            data.add(CartGoodsBean(false, 288.99f))
-            data.add(CartGoodsBean(false, 288.99f))
+            data.add(CartGoodsBean(false, (++id).toFloat()))
+            data.add(CartGoodsBean(false, (++id).toFloat()))
+            data.add(CartGoodsBean(false, (++id).toFloat()))
             dataAll.add(data)
         }
 
@@ -137,52 +137,77 @@ class CartFragment : Fragment() {
         override fun onReceive(context: Context, intent: Intent) {
 
             val parcelableExtra = intent.getParcelableExtra<CartGoodsBean>(NATIVE_CARTCHECED_BRODCAST)
-
-
             val contains = goods.contains(parcelableExtra.id)
 
             val text = tv_prise.text
             var toFloat = text.toString().toFloat()
-            if (contains) {
 
-                if (parcelableExtra.isCheck) {
-                } else {
+            //当前是滑动删除
+            if (intent.getBooleanExtra(NATIVE_CART_IS_SWIED_DEL, false)) {
+
+                if (contains) {
                     toFloat -= parcelableExtra.prise
                     goods.remove(parcelableExtra.id)
                 }
+                val iterator = dataAll.iterator()
+                var arrIndex = -1
+                dataAll.forEachIndexed({ index, arrayList ->
+                    if (arrayList.size == 0) {
+                        arrIndex = index
+                        return@forEachIndexed
+                    }
+                })
+                if (arrIndex!=-1) {
+                    dataAll.removeAt(arrIndex)
+//                    cartShopAdapter.notifyDataSetChanged()
+                }
+//
 
             } else {
+                if (contains) {
+
+                    if (parcelableExtra.isCheck) {
+
+                    } else {
+                        toFloat -= parcelableExtra.prise
+                        goods.remove(parcelableExtra.id)
+                    }
+
+                } else {
 
 
-                if (parcelableExtra.isCheck) {
-                    goods.add(parcelableExtra.id)
-                    toFloat += parcelableExtra.prise
+                    if (parcelableExtra.isCheck) {
+                        goods.add(parcelableExtra.id)
+                        toFloat += parcelableExtra.prise
+                    }
                 }
-            }
 
+
+                if (!parcelableExtra.isCheck) {
+                    cb_all.setOnCheckedChangeListener(null)
+                    cb_all.isChecked = false
+                    cb_all.setOnCheckedChangeListener(cb_allListner)
+                }
+
+                var count = 0
+
+                dataAll.forEach {
+                    count += it.size
+                }
+
+                if (count == goods.size) {
+                    cb_all.setOnCheckedChangeListener(null)
+                    cb_all.isChecked = true
+                    cb_all.setOnCheckedChangeListener(cb_allListner)
+                }
+
+            }
             val decimalFormat = java.text.DecimalFormat("#0.00")
 
             val format = decimalFormat.format(toFloat)
 
             tv_prise.text = format.toString()
 
-            if (!parcelableExtra.isCheck) {
-                cb_all.setOnCheckedChangeListener(null)
-                cb_all.isChecked = false
-                cb_all.setOnCheckedChangeListener(cb_allListner)
-            }
-
-            var count = 0
-
-            dataAll.forEach {
-                count += it.size
-            }
-
-            if (count == goods.size) {
-                cb_all.setOnCheckedChangeListener(null)
-                cb_all.isChecked = true
-                cb_all.setOnCheckedChangeListener(cb_allListner)
-            }
 
         }
     }

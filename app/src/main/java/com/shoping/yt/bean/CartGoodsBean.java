@@ -2,6 +2,7 @@ package com.shoping.yt.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.UUID;
 
@@ -9,13 +10,23 @@ import java.util.UUID;
  * Created by fmy on 2017/11/19.
  */
 
-public class CartGoodsBean implements Parcelable {
+public class CartGoodsBean implements Parcelable, Cloneable {
+    @Override
+    public Object clone() {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     //是否被选中
     private boolean isCheck;
-    private String ID;
+    private String ID = UUID.randomUUID().toString();
 
     {
-        ID = UUID.randomUUID().toString();
+
     }
 
     public String getID() {
@@ -71,6 +82,7 @@ public class CartGoodsBean implements Parcelable {
     public CartGoodsBean(boolean isCheck, float prise) {
         this.isCheck = isCheck;
         this.prise = prise;
+        Log.e("FMY", "CartGoodsBean被创建了: " + ID + "=== 价格" + prise);
     }
 
     //价格
