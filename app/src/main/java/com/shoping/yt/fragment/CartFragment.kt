@@ -153,6 +153,7 @@ class CartFragment : Fragment() {
                 }
 //
                 var arrIndex = -1
+
                 dataAll.forEachIndexed({ index, arrayList ->
                     if (arrayList.size == 0) {
                         arrIndex = index
