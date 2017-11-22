@@ -4,12 +4,17 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Property;
+
 import java.util.UUID;
+import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by fmy on 2017/11/19.
  */
-
+@Entity
 public class CartGoodsBean implements Parcelable, Cloneable {
     @Override
     public Object clone() {
@@ -22,12 +27,13 @@ public class CartGoodsBean implements Parcelable, Cloneable {
     }
 
     //是否被选中
+    @Property(nameInDb = "isCheck")
     private boolean isCheck;
+    @Id
+    @Property(nameInDb = "uuid")
     private String ID = UUID.randomUUID().toString();
 
-    {
 
-    }
 
     public String getID() {
         return ID;
@@ -85,7 +91,19 @@ public class CartGoodsBean implements Parcelable, Cloneable {
         Log.e("FMY", "CartGoodsBean被创建了: " + ID + "=== 价格" + prise);
     }
 
+    @Generated(hash = 1432578812)
+    public CartGoodsBean(boolean isCheck, String ID, float prise) {
+        this.isCheck = isCheck;
+        this.ID = ID;
+        this.prise = prise;
+    }
+
+    @Generated(hash = 546741089)
+    public CartGoodsBean() {
+    }
+
     //价格
+    @Property(nameInDb = "prise")
     private float prise;
 
     @Override
@@ -98,5 +116,13 @@ public class CartGoodsBean implements Parcelable, Cloneable {
         dest.writeByte((byte) (isCheck ? 1 : 0));
         dest.writeFloat(prise);
         dest.writeString(getID());
+    }
+
+    public boolean getIsCheck() {
+        return this.isCheck;
+    }
+
+    public void setIsCheck(boolean isCheck) {
+        this.isCheck = isCheck;
     }
 }

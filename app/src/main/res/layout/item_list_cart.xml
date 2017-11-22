@@ -56,7 +56,7 @@
 
         </android.support.constraint.ConstraintLayout>
 
-        <com.shoping.yt.MyRecycleView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_cart_inside"
             android:layout_width="0dp"
             android:layout_height="match_parent"

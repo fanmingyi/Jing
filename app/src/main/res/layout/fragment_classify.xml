@@ -106,7 +106,7 @@
         android:background="#eee"
         app:layout_constraintTop_toBottomOf="@+id/tb_title_classify" />
 
-    <com.shoping.yt.MyRecycleView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="0dp"
         android:id="@+id/rv_rightinfo"
         android:layout_marginBottom="10dp"

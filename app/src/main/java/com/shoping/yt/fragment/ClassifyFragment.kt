@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.readystatesoftware.systembartint.SystemBarTintManager
-import com.shoping.yt.FLAG
 import com.shoping.yt.R
 import com.shoping.yt.activity.MainActivity
 import com.shoping.yt.adapter.ClassifyLeftMenuAdapter

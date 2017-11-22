@@ -9,8 +9,10 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.shoping.yt.APP;
 import com.shoping.yt.R;
 import com.shoping.yt.bean.CartGoodsBean;
+import com.shoping.yt.bean.CartGoodsBeanDao;
 import com.shoping.yt.minterface.IRbChangListener;
 
 import java.util.List;
@@ -34,7 +36,7 @@ public class CartShowInsideAdapter extends BaseItemDraggableAdapter<CartGoodsBea
     @Override
     protected void convert(final BaseViewHolder helper, final CartGoodsBean item) {
 
-        helper.itemView.setTag(item.clone());
+        helper.itemView.setTag(item);
 
         TextView tv_prise_original = helper.getView(R.id.tv_prise_original);
 
@@ -63,7 +65,10 @@ public class CartShowInsideAdapter extends BaseItemDraggableAdapter<CartGoodsBea
         cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                CartGoodsBeanDao cartGoodsBeanDao = APP.getCartGoodsBeanDao();
+                cartGoodsBeanDao.update(item);
                 item.setCheck(isChecked);
+
                 changeCh(isChecked, (CartGoodsBean) item.clone());
 
                 if (listner != null) {
@@ -81,6 +86,6 @@ public class CartShowInsideAdapter extends BaseItemDraggableAdapter<CartGoodsBea
         intent.putExtra(NATIVE_CARTCHECED_BRODCAST, clone);
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
-//
+
 
 }

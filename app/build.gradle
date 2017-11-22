@@ -1,12 +1,16 @@
 apply plugin: 'com.android.application'
-
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 apply plugin: 'kotlin-android-extensions'
 
 android {
-
+    greendao{
+        schemaVersion 1
+        targetGenDir 'src/main/java'
+    }
     dataBinding {
         enabled = true
     }
@@ -67,4 +71,7 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:26.0.0-beta1'
     implementation 'com.android.support:cardview-v7:26.0.0-beta1'
     compile 'com.azoft.carousellayoutmanager:carousel:1.2.1'
+
+    compile 'org.greenrobot:greendao:3.1.0'
+
 }

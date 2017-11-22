@@ -16,8 +16,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import com.readystatesoftware.systembartint.SystemBarTintManager
+import com.shoping.yt.APP
+import com.shoping.yt.FLAG
 import com.shoping.yt.FLAG.*
-
 import com.shoping.yt.R
 import com.shoping.yt.activity.MainActivity
 import com.shoping.yt.adapter.CartShopAdapter
@@ -26,6 +27,7 @@ import com.shoping.yt.utils.DimenUtitls
 import kotlinx.android.synthetic.main.fragment_cart.*
 import kotlinx.android.synthetic.main.fragment_classify.*
 import kotlinx.android.synthetic.main.item_list_cart.*
+import java.text.DecimalFormat
 import kotlin.collections.ArrayList
 
 
@@ -71,26 +73,31 @@ class CartFragment : Fragment() {
         val instance = LocalBroadcastManager.getInstance(mMainActivity)
 
         val intentFilter = IntentFilter(NATIVE_CARTCHECED_BRODCAST)
+        val intentFilter2 = IntentFilter(NATIVE_CART_HAVE_GOOD)
 
         instance.registerReceiver(myBroadCastReceiver, intentFilter)
+        instance.registerReceiver(myBroadCastReceiver, intentFilter2)
+
 
         cb_all.setOnCheckedChangeListener(cb_allListner)
 
     }
 
     val cb_allListner = CompoundButton.OnCheckedChangeListener { cb, isChecked ->
-        var index = 1
+
         dataAll
                 .flatMap { it }
                 .forEach {
-                    it.isCheck = isChecked
-
+                    it.setCheck(isChecked)
+                    val intent = Intent(NATIVE_CARTCHECED_BRODCAST)
+                    intent.putExtra(NATIVE_CARTCHECED_BRODCAST, it)
+                    LocalBroadcastManager.getInstance(mMainActivity).sendBroadcast(intent)
 //
-//                    val intent = Intent(NATIVE_CARTCHECED_BRODCAST)
-//                    intent.putExtra(NATIVE_CARTCHECED_BRODCAST, it)
-//                    LocalBroadcastManager.getInstance(mMainActivity).sendBroadcast(intent)
                 }
-        cartShopAdapter.myNotifyAll();
+
+        rv_cart_inside
+        cartShopAdapter.notifyDataSetChanged()
+//        cartShopAdapter.myNotifyAll();
 
     }
 
@@ -102,18 +109,14 @@ class CartFragment : Fragment() {
 
     }
 
-    var dataAll = ArrayList<ArrayList<CartGoodsBean>>()
+    var dataAll = ArrayList<List<CartGoodsBean>>()
     lateinit var cartShopAdapter: CartShopAdapter
     private fun initAdapter() {
-        var id = 0;
-        for (i in 0..2) {
-            var data = ArrayList<CartGoodsBean>()
-            data.add(CartGoodsBean(false, (++id).toFloat()))
-            data.add(CartGoodsBean(false, (++id).toFloat()))
-            data.add(CartGoodsBean(false, (++id).toFloat()))
-            dataAll.add(data)
-        }
+        val dao = APP.getCartGoodsBeanDao()
 
+        val list = dao.queryBuilder().build().list()
+        if (list.size != 0)
+            dataAll.add(list)
 
 
         cartShopAdapter = CartShopAdapter(dataAll, mMainActivity)
@@ -138,78 +141,107 @@ class CartFragment : Fragment() {
 
         override fun onReceive(context: Context, intent: Intent) {
 
-            val parcelableExtra = intent.getParcelableExtra<CartGoodsBean>(NATIVE_CARTCHECED_BRODCAST)
-            val contains = goods.contains(parcelableExtra.id)
+            val action = intent.action
+            if (action == NATIVE_CART_HAVE_GOOD) {
 
-            val text = tv_prise.text
-            var toFloat = text.toString().toFloat()
+                val parcelableExtra = intent.getParcelableExtra<CartGoodsBean>(NATIVE_CART_HAVE_GOOD)
 
-            //当前是滑动删除
-            if (intent.getBooleanExtra(NATIVE_CART_IS_SWIED_DEL, false)) {
-//
-                if (contains) {
-                    toFloat -= parcelableExtra.prise
-                    goods.remove(parcelableExtra.id)
+                var list: ArrayList<CartGoodsBean>? = null
+
+                list = if (dataAll.size == 0) {
+                    ArrayList()
+                } else {
+                    dataAll[dataAll.size - 1] as ArrayList<CartGoodsBean>
                 }
-//
-                var arrIndex = -1
+                if (((list != null && list.size >= 3) || dataAll.size == 0) && parcelableExtra != null) {
+                    val newList = ArrayList<CartGoodsBean>()
+                    newList.add(parcelableExtra)
+                    dataAll.add(newList)
+                    cartShopAdapter.notifyItemInserted(dataAll.size)
+                } else if (parcelableExtra != null) {
+                    list?.add(parcelableExtra)
 
-                dataAll.forEachIndexed({ index, arrayList ->
-                    if (arrayList.size == 0) {
-                        arrIndex = index
-                        return@forEachIndexed
-                    }
-                })
-                if (arrIndex!=-1) {
-                    dataAll.removeAt(arrIndex)
-                    cartShopAdapter.notifyItemRemoved(arrIndex)
+
+
                 }
+                cartShopAdapter.notifyDataSetChanged()
 
+            } else if (action.equals(NATIVE_CARTCHECED_BRODCAST)) {
+                val parcelableExtra = intent.getParcelableExtra<CartGoodsBean>(NATIVE_CARTCHECED_BRODCAST)
+                val contains = goods.contains(parcelableExtra.id)
 
-            } else {
-                if (contains) {
+                val text = tv_prise.text
+                var toFloat = text.toString().toFloat()
 
-                    if (parcelableExtra.isCheck) {
-
-                    } else {
+                //当前是滑动删除
+                if (intent.getBooleanExtra(NATIVE_CART_IS_SWIED_DEL, false)) {
+//
+                    if (contains) {
                         toFloat -= parcelableExtra.prise
                         goods.remove(parcelableExtra.id)
                     }
+//
+                    var arrIndex = -1
+
+                    dataAll.forEachIndexed({ index, arrayList ->
+                        if (arrayList.size == 0) {
+                            arrIndex = index
+                            return@forEachIndexed
+                        }
+                    })
+                    if (arrIndex != -1) {
+                        dataAll.removeAt(arrIndex)
+                        cartShopAdapter.notifyItemRemoved(arrIndex)
+                    }
+
 
                 } else {
+                    if (contains) {
+
+                        if (parcelableExtra.getIsCheck()) {
+
+                        } else {
+                            toFloat -= parcelableExtra.prise
+                            goods.remove(parcelableExtra.id)
+                        }
+
+                    } else {
 
 
-                    if (parcelableExtra.isCheck) {
-                        goods.add(parcelableExtra.id)
-                        toFloat += parcelableExtra.prise
+                        if (parcelableExtra.getIsCheck()) {
+                            goods.add(parcelableExtra.id)
+                            toFloat += parcelableExtra.prise
+                        }
                     }
+
+
+                    if (!parcelableExtra.getIsCheck()) {
+                        cb_all.setOnCheckedChangeListener(null)
+                        cb_all.isChecked = false
+                        cb_all.setOnCheckedChangeListener(cb_allListner)
+                    }
+
+                    var count = 0
+
+                    dataAll.forEach {
+                        count += it.size
+                    }
+
+                    if (count == goods.size) {
+                        cb_all.setOnCheckedChangeListener(null)
+                        cb_all.isChecked = true
+                        cb_all.setOnCheckedChangeListener(cb_allListner)
+                    }
+
                 }
+                val decimalFormat = DecimalFormat("#0.00")
 
+                val format = decimalFormat.format(toFloat)
 
-                if (!parcelableExtra.isCheck) {
-                    cb_all.setOnCheckedChangeListener(null)
-                    cb_all.isChecked = false
-                    cb_all.setOnCheckedChangeListener(cb_allListner)
-                }
+                tv_prise.text = format.toString()
 
-                var count = 0
-
-                dataAll.forEach {
-                    count += it.size
-                }
-
-                if (count == goods.size) {
-                    cb_all.setOnCheckedChangeListener(null)
-                    cb_all.isChecked = true
-                    cb_all.setOnCheckedChangeListener(cb_allListner)
-                }
 
             }
-            val decimalFormat = java.text.DecimalFormat("#0.00")
-
-            val format = decimalFormat.format(toFloat)
-
-            tv_prise.text = format.toString()
 
 
         }
