@@ -121,7 +121,7 @@ public class CartShopAdapter extends BaseItemDraggableAdapter<List<CartGoodsBean
     @Override
     protected void convert(final BaseViewHolder helper, final List<CartGoodsBean> item) {
 
-
+        helper.setIsRecyclable(false);
         helper.getView(R.id.nsv_root).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -216,7 +216,7 @@ public class CartShopAdapter extends BaseItemDraggableAdapter<List<CartGoodsBean
         cartShowInsideAdapter.enableSwipeItem();
         cartShowInsideAdapter.setOnItemSwipeListener(new MyOnItemSwipeListener(cartShowInsideAdapter));
 
-        Log.e("FMY", "onver===="+cartShowInsideAdapter.toString() +"  ====>>"+ helper.getAdapterPosition());
+        Log.e("FMY", "onver====" + cartShowInsideAdapter.toString() + "  ====>>" + helper.getAdapterPosition());
 
         cb.setOnCheckedChangeListener(onCheckedChangeListener);
 

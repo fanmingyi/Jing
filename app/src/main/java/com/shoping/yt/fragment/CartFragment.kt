@@ -10,14 +10,12 @@ import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import com.readystatesoftware.systembartint.SystemBarTintManager
 import com.shoping.yt.APP
-import com.shoping.yt.FLAG
 import com.shoping.yt.FLAG.*
 import com.shoping.yt.R
 import com.shoping.yt.activity.MainActivity
@@ -25,10 +23,8 @@ import com.shoping.yt.adapter.CartShopAdapter
 import com.shoping.yt.bean.CartGoodsBean
 import com.shoping.yt.utils.DimenUtitls
 import kotlinx.android.synthetic.main.fragment_cart.*
-import kotlinx.android.synthetic.main.fragment_classify.*
 import kotlinx.android.synthetic.main.item_list_cart.*
 import java.text.DecimalFormat
-import kotlin.collections.ArrayList
 
 
 /**
